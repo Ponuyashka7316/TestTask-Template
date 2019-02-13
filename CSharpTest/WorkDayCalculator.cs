@@ -17,7 +17,7 @@ namespace CSharpTest
             int workDaysCounter = dayCount - 1;
             while (workDaysCounter > 0)
             {
-                //flag determines whether current day is weekday or work day 
+                //flag determines whether current day is a weekend or a working day 
                 bool flag = false;
                 if (weekEnds != null)
                 {

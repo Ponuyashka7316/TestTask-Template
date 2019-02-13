@@ -15,19 +15,28 @@ namespace CSharpTest
         {
             DateTime resultDate = startDate;
             int workDaysCounter = dayCount - 1;
-            while (workDaysCounter != 0)
+            while (workDaysCounter > 0)
             {
+                //flag determines whether current day is weekday or work day 
+                bool flag = false;
                 if (weekEnds != null)
-                    for (int i = 0; i < weekEnds.Length; i++)
+                {
+                    for (int i = 0; i < weekEnds.Length; ++i)
+                    {
                         if (weekEnds[i].StartDate > weekEnds[i].EndDate)
                             throw new ArgumentException();
-                        else if (resultDate.InRange(weekEnds[i].StartDate, weekEnds[i].EndDate))
-                        {
-                            ++workDaysCounter;
-                            break;
-                        }
-                resultDate = resultDate.AddDays(1);
-                --workDaysCounter;
+                        if (resultDate.InRange(weekEnds[i].StartDate, weekEnds[i].EndDate))
+                            flag = true;
+                    }
+                    if (flag == false)
+                        --workDaysCounter;
+                    resultDate = resultDate.AddDays(1);
+                }
+                else
+                {
+                    resultDate = resultDate.AddDays(1);
+                    --workDaysCounter;
+                }
             }
             return resultDate;
         }
